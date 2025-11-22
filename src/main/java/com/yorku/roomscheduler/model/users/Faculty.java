@@ -3,8 +3,8 @@ package com.yorku.roomscheduler.model.users;
 import com.yorku.roomscheduler.model.enums.AccountType;
 
 public class Faculty extends User {
-    private String employeeId;
-    private String department;
+    private final String employeeId;
+    private final String department;
     
     public Faculty(String userId, String email, String password, String employeeId, String department) {
         super(userId, email, password, AccountType.FACULTY);

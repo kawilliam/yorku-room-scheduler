@@ -5,7 +5,7 @@ package com.yorku.roomscheduler.model.users;
  */
 public class Administrator {
 	
-	private String adminId, name, email, password, accessLevel;
+	private final String adminId, name, email, password, accessLevel;
 	
 	public Administrator(String adminId, String name, String email, String password) {
 		this.adminId = adminId;
@@ -46,4 +46,8 @@ public class Administrator {
 	public String getAccessLevel() {
 		return accessLevel;
 	}
+
+    public String getPassword() {
+        return password;
+    }
 }
