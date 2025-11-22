@@ -1,5 +1,7 @@
+com/yorku/roomscheduler/model/users/Administrator.class
 com/yorku/roomscheduler/model/enums/AccountType.class
 com/yorku/roomscheduler/model/enums/BookingStatus.class
 com/yorku/roomscheduler/Main.class
 com/yorku/roomscheduler/model/enums/PaymentMethod.class
+com/yorku/roomscheduler/patterns/singleton/ChiefEventCoordinator.class
 com/yorku/roomscheduler/model/enums/RoomStatus.class
