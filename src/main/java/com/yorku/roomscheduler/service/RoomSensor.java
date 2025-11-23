@@ -21,13 +21,13 @@ public class RoomSensor {
     // Subscribe to events
     public void addObserver(BookingObserver observer) {
         observers.add(observer);
-        System.out.println("👀 Observer added to sensor " + sensorId);
+        System.out.println("Observer added to sensor " + sensorId);
     }
     
     // Unsubscribe from events
     public void removeObserver(BookingObserver observer) {
         observers.remove(observer);
-        System.out.println("👋 Observer removed from sensor " + sensorId);
+        System.out.println("Observer removed from sensor " + sensorId);
     }
     
     // Notify all observers
@@ -36,18 +36,18 @@ public class RoomSensor {
         for (BookingObserver observer : observers) {
             observer.update(event);
         }
-        System.out.println("✅ All observers notified!\n");
+        System.out.println("All observers notified!\n");
     }
     
     // Simulate badge scan
     public boolean scanBadge(String badgeId, String bookingId) {
-        System.out.println("\n🔍 [SENSOR " + sensorId + "] Badge scanned: " + badgeId);
+        System.out.println("\n[SENSOR " + sensorId + "] Badge scanned: " + badgeId);
         
         // Simulate validation
         boolean isValid = validateBadge(badgeId);
         
         if (isValid) {
-            System.out.println("✅ Badge valid! Unlocking room " + roomId);
+            System.out.println("Badge valid! Unlocking room " + roomId);
             
             // Notify observers about check-in
             BookingEvent event = new BookingEvent(
@@ -59,14 +59,14 @@ public class RoomSensor {
             
             return true;
         } else {
-            System.out.println("❌ Invalid badge!");
+            System.out.println("Invalid badge!");
             return false;
         }
     }
     
     // Simulate occupancy detection
     public void detectOccupancyChange(boolean isOccupied) {
-        System.out.println("\n👥 [SENSOR " + sensorId + "] Occupancy changed: " + (isOccupied ? "OCCUPIED" : "VACANT"));
+        System.out.println("\n[SENSOR " + sensorId + "] Occupancy changed: " + (isOccupied ? "OCCUPIED" : "VACANT"));
         
         BookingEvent event = new BookingEvent(
             "OCCUPANCY_CHANGE",
