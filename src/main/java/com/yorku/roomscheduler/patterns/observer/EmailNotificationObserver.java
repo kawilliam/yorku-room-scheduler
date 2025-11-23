@@ -9,7 +9,7 @@ public class EmailNotificationObserver implements BookingObserver {
     
     @Override
     public void update(BookingEvent event) {
-        System.out.println("📧 [EMAIL SERVICE] Sending email notification...");
+        System.out.println(" [EMAIL SERVICE] Sending email notification...");
         System.out.println("   Event: " + event.getEventType());
         System.out.println("   Message: " + event.getMessage());
         
@@ -33,18 +33,18 @@ public class EmailNotificationObserver implements BookingObserver {
     }
     
     private void sendBookingConfirmation(BookingEvent event) {
-        System.out.println("   ✅ Booking confirmation email sent!");
+        System.out.println("Booking confirmation email sent!");
     }
     
     private void sendCheckInConfirmation(BookingEvent event) {
-        System.out.println("   ✅ Check-in confirmation email sent!");
+        System.out.println("Check-in confirmation email sent!");
     }
     
     private void sendCancellationNotice(BookingEvent event) {
-        System.out.println("   ✅ Cancellation notice email sent!");
+        System.out.println("Cancellation notice email sent!");
     }
     
     private void sendForfeitureNotice(BookingEvent event) {
-        System.out.println("   ⚠️ Deposit forfeiture notice email sent!");
+        System.out.println("Deposit forfeiture notice email sent!");
     }
 }
