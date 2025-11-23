@@ -1,5 +1,9 @@
 package com.yorku.roomscheduler.model;
 
+
+
+import com.yorku.roomscheduler.patterns.state.BookingState;
+import com.yorku.roomscheduler.patterns.state.PendingState;
 import com.yorku.roomscheduler.model.enums.BookingStatus;
 import com.yorku.roomscheduler.patterns.observer.BookingObserver;
 import com.yorku.roomscheduler.patterns.observer.BookingEvent;
@@ -17,10 +21,11 @@ public class Booking {
     private double totalCost;
     private double depositPaid;
     private boolean checkedIn;
-    
+    private BookingState currentState;
+    private double hourlyRate;
     // Observer pattern support
     private List<BookingObserver> observers;
-    
+     
     public Booking(String bookingId, String userId, String roomId, 
                    LocalDateTime startTime, LocalDateTime endTime, double totalCost) {
         this.bookingId = bookingId;
@@ -32,6 +37,7 @@ public class Booking {
         this.status = BookingStatus.PENDING;
         this.checkedIn = false;
         this.observers = new ArrayList<>();
+        this.currentState = new PendingState();
     }
     
     // Observer methods
@@ -58,14 +64,16 @@ public class Booking {
     }
     
     public void checkIn() {
-        this.checkedIn = true;
+    	currentState.checkIn(this);
+    	this.checkedIn = true;
         this.status = BookingStatus.CHECKED_IN;
         notifyObservers("CHECK_IN", 
             "User checked in to booking " + bookingId);
     }
     
     public void cancel() {
-        this.status = BookingStatus.CANCELLED;
+        currentState.cancel(this);
+    	this.status = BookingStatus.CANCELLED;
         notifyObservers("BOOKING_CANCELLED", 
             "Booking " + bookingId + " has been cancelled");
     }
@@ -75,7 +83,34 @@ public class Booking {
         notifyObservers("DEPOSIT_FORFEITED", 
             "Deposit forfeited for booking " + bookingId + " - late check-in");
     }
-    
+    // State methods
+    public void setState(BookingState state) {
+        this.currentState = state;
+        System.out.println("📊 Booking state changed to: " + state.getStateName());
+    }
+    public BookingState getState() {
+        return currentState;
+    }
+// Delegate to current state
+//    public void checkIn() {
+//        currentState.checkIn(this);
+//    }
+//
+//    public void cancel() {
+//        currentState.cancel(this);
+//    }
+
+    public void extend(int hours) {
+        currentState.extend(this, hours);
+    }
+
+    public void complete() {
+        currentState.complete(this);
+    }
+
+    public String getCurrentStateName() {
+        return currentState.getStateName();
+    }
     // Getters
     public String getBookingId() { return bookingId; }
     public String getUserId() { return userId; }
@@ -85,4 +120,15 @@ public class Booking {
     public BookingStatus getStatus() { return status; }
     public double getTotalCost() { return totalCost; }
     public boolean isCheckedIn() { return checkedIn; }
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+ 
+    public double getHourlyRate() {
+        return hourlyRate;
+    }
+
+    public void setHourlyRate(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
 }
