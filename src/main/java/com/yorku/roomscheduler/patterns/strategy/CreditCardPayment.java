@@ -10,10 +10,10 @@ public class CreditCardPayment implements PaymentStrategy {
         
         // Simulate validation
         if (cardNumber.length() == 16) {
-            System.out.println("✅ Payment successful!");
+            System.out.println("Payment successful!");
             return true;
         } else {
-            System.out.println("❌ Invalid card number!");
+            System.out.println("Invalid card number!");
             return false;
         }
     }
