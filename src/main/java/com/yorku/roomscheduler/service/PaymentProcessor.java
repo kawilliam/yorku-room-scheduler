@@ -13,7 +13,7 @@ public class PaymentProcessor {
     // Process payment using current strategy
     public boolean processPayment(double amount, String accountDetails) {
         if (paymentStrategy == null) {
-            System.out.println("❌ No payment method selected!");
+            System.out.println("No payment method selected!");
             return false;
         }
         
