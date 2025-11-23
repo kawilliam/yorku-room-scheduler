@@ -6,7 +6,7 @@ public class InstitutionalBilling implements PaymentStrategy {
     public boolean processPayment(double amount, String departmentCode) {
         System.out.println("Billing to department: " + departmentCode);
         System.out.println("Amount: $" + amount);
-        System.out.println("✅ Institutional billing processed!");
+        System.out.println("Institutional billing processed!");
         return true;
     }
     
