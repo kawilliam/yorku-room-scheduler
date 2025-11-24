@@ -91,14 +91,6 @@ public class Booking {
     public BookingState getState() {
         return currentState;
     }
-// Delegate to current state
-//    public void checkIn() {
-//        currentState.checkIn(this);
-//    }
-//
-//    public void cancel() {
-//        currentState.cancel(this);
-//    }
 
     public void extend(int hours) {
         currentState.extend(this, hours);

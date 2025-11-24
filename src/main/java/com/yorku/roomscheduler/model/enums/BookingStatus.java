@@ -2,7 +2,7 @@ package com.yorku.roomscheduler.model.enums;
 
 public enum BookingStatus {
 	PENDING("Pending", "Awaiting payment confirmation"),
-	CONFIRMED("Confirmed", "Payment recceived, awaiting check-in"),
+	CONFIRMED("Confirmed", "Payment received, awaiting check-in"),
 	CHECKED_IN("Checked In", "User has checked in"),
 	COMPLETED("Completed", "Booking finished successfully"),
 	CANCELLED("Cancelled", "Booking was cancelled"),

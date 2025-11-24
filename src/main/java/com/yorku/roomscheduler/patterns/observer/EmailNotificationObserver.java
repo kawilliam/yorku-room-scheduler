@@ -9,9 +9,9 @@ public class EmailNotificationObserver implements BookingObserver {
     
     @Override
     public void update(BookingEvent event) {
-        System.out.println(" [EMAIL SERVICE] Sending email notification...");
-        System.out.println("   Event: " + event.getEventType());
-        System.out.println("   Message: " + event.getMessage());
+        System.out.println("[EMAIL SERVICE] Sending email notification...");
+        System.out.println("Event: " + event.getEventType());
+        System.out.println("Message: " + event.getMessage());
         
         // Simulate sending email based on event type
         switch(event.getEventType()) {
@@ -28,7 +28,7 @@ public class EmailNotificationObserver implements BookingObserver {
                 sendForfeitureNotice(event);
                 break;
             default:
-                System.out.println("   Email sent for: " + event.getEventType());
+                System.out.println("Email sent for: " + event.getEventType());
         }
     }
     

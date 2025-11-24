@@ -32,7 +32,7 @@ public class RoomSensor {
     
     // Notify all observers
     private void notifyObservers(BookingEvent event) {
-        System.out.println("\n📡 [SENSOR " + sensorId + "] Broadcasting event to " + observers.size() + " observers...");
+        System.out.println("\n[SENSOR " + sensorId + "] Broadcasting event to " + observers.size() + " observers...");
         for (BookingObserver observer : observers) {
             observer.update(event);
         }

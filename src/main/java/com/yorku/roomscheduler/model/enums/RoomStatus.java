@@ -14,7 +14,7 @@ public enum RoomStatus {
 		this.description = description;
 	}
 	
-	public String getDiplayName() {
+	public String getDisplayName() {
 		return displayName;
 	}
 	
