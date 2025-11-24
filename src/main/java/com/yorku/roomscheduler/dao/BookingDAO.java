@@ -174,28 +174,31 @@ public class BookingDAO {
             System.out.println("DEBUG RECONSTRUCT: About to restore state...");
             
             switch (stateName) {
-            case "PENDING":
-                booking.setState(new PendingState());
-                break;
-            case "CONFIRMED":
-            	System.out.println("DEBUG RECONSTRUCT: Setting to CONFIRMED");
-                booking.setState(new ConfirmedState());
-                break;
-            case "CHECKED_IN":
-                booking.setState(new CheckedInState());
-                break;
-            case "COMPLETED":
-                booking.setState(new CompletedState());
-                break;
-            case "CANCELLED":
-                booking.setState(new CancelledState());
-                break;
-            case "FORFEITED":
-                booking.setState(new ForfeitedState());
-                break;
-        }
-        
-        return booking;
+                case "PENDING":
+                    booking.setState(new PendingState());
+                    break;
+                case "CONFIRMED":
+                    System.out.println("DEBUG RECONSTRUCT: Setting to CONFIRMED");
+                    booking.setState(new ConfirmedState());
+                    break;
+                case "CHECKED_IN":
+                    booking.setState(new CheckedInState());
+                    break;
+                case "COMPLETED":
+                    booking.setState(new CompletedState());
+                    break;
+                case "CANCELLED":
+                    booking.setState(new CancelledState());
+                    break;
+                case "FORFEITED":  // MAKE SURE THIS CASE EXISTS
+                    booking.setState(new ForfeitedState());
+                    break;
+                default:
+                    System.err.println("Unknown state: " + stateName);
+                    booking.setState(new PendingState()); // Fallback
+            }
+            
+            return booking;
         } catch (Exception e) {
             System.err.println("Error reconstructing booking: " + e.getMessage());
             return null;

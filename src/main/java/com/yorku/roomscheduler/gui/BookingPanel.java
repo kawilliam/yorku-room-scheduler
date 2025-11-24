@@ -5,6 +5,7 @@ import com.yorku.roomscheduler.model.*;
 import com.yorku.roomscheduler.model.enums.RoomStatus;
 import com.yorku.roomscheduler.model.users.User;
 import com.yorku.roomscheduler.patterns.facade.BookingFacade;
+import com.yorku.roomscheduler.patterns.state.PendingState;
 import com.yorku.roomscheduler.patterns.strategy.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -147,6 +148,11 @@ public class BookingPanel extends JPanel {
         completeButton.addActionListener(e -> handleCompleteBooking());
         bookingButtonPanel.add(completeButton);
         
+     // In bookingButtonPanel section, add:
+        JButton testLateButton = new JButton("TEST: Create Late Booking");
+        testLateButton.addActionListener(e -> handleCreateTestLateBooking());
+        bookingButtonPanel.add(testLateButton);
+        
         bookingsPanel.add(bookingButtonPanel, BorderLayout.SOUTH);
         
         splitPane.setTopComponent(roomsPanel);
@@ -176,21 +182,27 @@ public class BookingPanel extends JPanel {
     }
     
     private void loadBookings() {
-    	System.out.println("DEBUG: Loading bookings for userId: " + userId);  // ADD THIS
+        System.out.println("DEBUG: Loading bookings for userId: " + userId);
         bookingTableModel.setRowCount(0);
         List<Booking> bookings = bookingDAO.getBookingsByUser(userId);
         System.out.println("DEBUG: Found " + bookings.size() + " bookings");
-        bookingTableModel.setRowCount(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         
         for (Booking booking : bookings) {
+            String status = booking.getCurrentStateName();
+            String displayStatus = status;
+            
+            if (status.equals("FORFEITED")) {
+                displayStatus = "FORFEITED";
+            }
+            
             bookingTableModel.addRow(new Object[]{
                 booking.getBookingId(),
                 booking.getRoomId(),
                 booking.getStartTime().format(formatter),
                 booking.getEndTime().format(formatter),
                 "$" + booking.getTotalCost(),
-                booking.getCurrentStateName()
+                displayStatus
             });
         }
     }
@@ -275,12 +287,45 @@ public class BookingPanel extends JPanel {
         Booking booking = bookingDAO.findById(bookingId);
         
         if (booking != null) {
+        	String previousState = booking.getCurrentStateName();
             booking.checkIn();
+            String newState = booking.getCurrentStateName();
             bookingDAO.updateBooking(booking);
-            roomDAO.updateRoomStatus(booking.getRoomId(), RoomStatus.OCCUPIED);
-            JOptionPane.showMessageDialog(this, "Checked in successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            loadBookings();
+            if (newState.equals("CHECKED_IN")) {
+                // Successful check-in
+                roomDAO.updateRoomStatus(booking.getRoomId(), RoomStatus.OCCUPIED);
+                JOptionPane.showMessageDialog(this, 
+                    "Checked in successfully! Enjoy your room.", 
+                    "Success", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                    
+            } else if (newState.equals("FORFEITED")) {
+                // Booking was forfeited due to late arrival
+                roomDAO.updateRoomStatus(booking.getRoomId(), RoomStatus.AVAILABLE);
+                JOptionPane.showMessageDialog(this, 
+                    "Check-in window expired!\n" +
+                    "You were more than 30 minutes late.\n" +
+                    "Your deposit has been forfeited and the booking is cancelled.", 
+                    "Booking Forfeited", 
+                    JOptionPane.ERROR_MESSAGE);
+                    
+            } else if (newState.equals("CONFIRMED")) {
+                // Too early to check in
+                LocalDateTime startTime = booking.getStartTime();
+                LocalDateTime now = LocalDateTime.now();
+                long minutesUntilStart = java.time.temporal.ChronoUnit.MINUTES.between(now, startTime);
+                
+                JOptionPane.showMessageDialog(this, 
+                    "Too early to check in!\n" +
+                    "You can check in 30 minutes before your booking.\n" +
+                    "Time until check-in window opens: " + minutesUntilStart + " minutes", 
+                    "Check-in Not Available", 
+                    JOptionPane.WARNING_MESSAGE);
+            }
+            
+            loadData();  // Refresh the view
         }
+        
     }
     
     private void handleExtendBooking() {
@@ -357,6 +402,41 @@ public class BookingPanel extends JPanel {
             loadData();
         } else {
             JOptionPane.showMessageDialog(this, "Can only complete checked-in bookings", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void handleCreateTestLateBooking() {
+        int selectedRow = roomTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a room", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        String roomId = (String) roomTableModel.getValueAt(selectedRow, 0);
+        
+        // Create a booking that started 45 minutes ago (past the 30-minute grace period)
+        LocalDateTime startTime = LocalDateTime.now().minusMinutes(45);
+        LocalDateTime endTime = startTime.plusHours(2);
+        
+        User user = this.currentUser;
+        double totalCost = 2 * user.getHourlyRate();
+        
+        String bookingId = "B" + String.format("%03d", (int)(Math.random() * 1000));
+        Booking booking = new Booking(bookingId, user.getUserId(), roomId, startTime, endTime, totalCost);
+        booking.setHourlyRate(user.getHourlyRate());
+        
+        // Move to CONFIRMED state (as if payment was made)
+        ((PendingState)booking.getState()).confirmPayment(booking);
+        
+        if (bookingDAO.saveBooking(booking)) {
+            JOptionPane.showMessageDialog(this, 
+                "Test late booking created!\n" +
+                "Start time: " + startTime.format(DateTimeFormatter.ofPattern("HH:mm")) + "\n" +
+                "Current time: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")) + "\n" +
+                "You are 45 minutes late - try to check in!", 
+                "Test Booking Created", 
+                JOptionPane.INFORMATION_MESSAGE);
+            loadData();
         }
     }
 }
