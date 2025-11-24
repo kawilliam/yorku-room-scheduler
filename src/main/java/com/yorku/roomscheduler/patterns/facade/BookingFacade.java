@@ -41,10 +41,15 @@ public class BookingFacade {
         System.out.println("=".repeat(60));
         
         try {
-            // STEP 1: Check room availability
-            System.out.println("\nStep 1: Checking room availability...");
+        	// STEP 1: Check room availability
+        	
+        	System.out.println("\nStep 1: Checking room availability...");
+            System.out.println("Room: " + roomId);
+            System.out.println("Time: " + startTime + " to " + endTime);
+            
             if (!roomManager.isRoomAvailable(roomId, startTime, endTime)) {
-                System.out.println("Room not available!");
+            	System.out.println("Room not available for the requested time!");
+                System.out.println("Another active booking exists for this time slot.");
                 return null;
             }
             

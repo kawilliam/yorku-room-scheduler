@@ -21,6 +21,7 @@ public class ConfirmedState implements BookingState {
             // More than 30 minutes late
             System.out.println("Check-in window expired! Forfeiting deposit...");
             booking.setState(new ForfeitedState());
+            booking.forfeitDeposit();
         } else {
             // Within window!
             System.out.println("Checking in... Welcome!");
@@ -37,12 +38,12 @@ public class ConfirmedState implements BookingState {
     
     @Override
     public void extend(Booking booking, int hours) {
-        System.out.println("❌ Cannot extend - must check in first");
+        System.out.println("Cannot extend - must check in first");
     }
     
     @Override
     public void complete(Booking booking) {
-        System.out.println("❌ Cannot complete - must check in first");
+        System.out.println("Cannot complete - must check in first");
     }
     
     @Override
