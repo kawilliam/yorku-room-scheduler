@@ -28,4 +28,5 @@ public abstract class User {
     public String getEmail() { return email; }
     public AccountType getAccountType() { return accountType; }
     public boolean isVerified() { return verified; }
+    public String getPass() { return password; }
 }

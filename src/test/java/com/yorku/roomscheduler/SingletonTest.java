@@ -16,7 +16,7 @@ public class SingletonTest {
 		ChiefEventCoordinator coord1 = ChiefEventCoordinator.getInstance();
 		ChiefEventCoordinator coord2 = ChiefEventCoordinator.getInstance();
 		
-		assertSame(coord2, coord2, "Should return same instance");
+		assertSame(coord1, coord2, "Should return same instance");
 		
 		System.out.println("Test passed: Only one instance exists!");
 	}

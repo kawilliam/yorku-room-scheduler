@@ -1,0 +1,2 @@
+"bookingId","userId","roomId","startTime","endTime","status","totalCost","hourlyRate"
+"B001","U1000","R003","2025-11-23T22:35:51.545042","2025-11-24T00:35:51.545042","CONFIRMED","40.0","20.0"
