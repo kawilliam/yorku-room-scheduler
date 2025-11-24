@@ -1,5 +1,5 @@
 "roomId","building","roomNumber","capacity","status","equipment"
-"R001","Bergeron","101","20","DISABLED","Projector,Whiteboard"
-"R002","Lassonde","201","50","MAINTENANCE","Projector,Whiteboard"
+"R001","Bergeron","101","20","AVAILABLE","Projector,Whiteboard"
+"R002","Lassonde","201","50","AVAILABLE","Projector,Whiteboard"
 "R003","Bergeron","205","30","AVAILABLE","Projector,Whiteboard"
 "R004","Lassonde","305","40","AVAILABLE","Projector,Whiteboard"

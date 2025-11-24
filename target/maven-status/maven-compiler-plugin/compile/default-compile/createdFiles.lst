@@ -1,5 +1,6 @@
 com/yorku/roomscheduler/patterns/state/ForfeitedState.class
 com/yorku/roomscheduler/gui/AdminPanel$2.class
+com/yorku/roomscheduler/gui/ChiefCoordinatorPanel.class
 com/yorku/roomscheduler/patterns/state/CompletedState.class
 com/yorku/roomscheduler/patterns/factory/StaffFactory.class
 com/yorku/roomscheduler/patterns/strategy/PaymentStrategy.class

@@ -3,6 +3,7 @@
 /Users/kylewilliamson/Documents/yorku-room-scheduler/src/main/java/com/yorku/roomscheduler/patterns/state/PendingState.java
 /Users/kylewilliamson/Documents/yorku-room-scheduler/src/main/java/com/yorku/roomscheduler/patterns/state/CheckedInState.java
 /Users/kylewilliamson/Documents/yorku-room-scheduler/src/main/java/com/yorku/roomscheduler/patterns/strategy/PaymentStrategy.java
+/Users/kylewilliamson/Documents/yorku-room-scheduler/src/main/java/com/yorku/roomscheduler/gui/ChiefCoordinatorPanel.java
 /Users/kylewilliamson/Documents/yorku-room-scheduler/src/main/java/com/yorku/roomscheduler/model/enums/BookingStatus.java
 /Users/kylewilliamson/Documents/yorku-room-scheduler/src/main/java/com/yorku/roomscheduler/service/RoomSensor.java
 /Users/kylewilliamson/Documents/yorku-room-scheduler/src/main/java/com/yorku/roomscheduler/model/users/User.java

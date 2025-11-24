@@ -3,6 +3,7 @@ package com.yorku.roomscheduler.gui;
 import javax.swing.*;
 import java.awt.*;
 
+
 /**
  * Main application window for YorkU Room Scheduler
  */
@@ -17,6 +18,7 @@ public class MainFrame extends JFrame {
     private RegistrationPanel registrationPanel;
     private BookingPanel bookingPanel;
     private AdminPanel adminPanel;
+    private ChiefCoordinatorPanel chiefCoordinatorPanel;
     
     private MainFrame() {
         setTitle("YorkU Conference Room Scheduler");
@@ -91,6 +93,28 @@ public class MainFrame extends JFrame {
         
         // Show the admin panel
         cardLayout.show(mainPanel, "ADMIN");
+        
+        // Force refresh
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
+    
+    public void showChiefCoordinatorPanel() {
+        System.out.println("DEBUG MAINFRAME: showChiefCoordinatorPanel called");
+        
+        // Remove ALL components from mainPanel and rebuild
+        mainPanel.removeAll();
+        
+        // Re-add login and registration panels
+        mainPanel.add(loginPanel, "LOGIN");
+        mainPanel.add(registrationPanel, "REGISTRATION");
+        
+        // Create new chief coordinator panel
+        chiefCoordinatorPanel = new ChiefCoordinatorPanel(this);
+        mainPanel.add(chiefCoordinatorPanel, "CHIEF");
+        
+        // Show the chief panel
+        cardLayout.show(mainPanel, "CHIEF");
         
         // Force refresh
         mainPanel.revalidate();

@@ -110,6 +110,19 @@ public class LoginPanel extends JPanel {
         registerButton.setPreferredSize(new Dimension(100, 35));
         registerButton.addActionListener(e -> mainFrame.showRegistrationPanel());
         
+     // Add spacing
+        gbc.gridy = 7;
+        add(Box.createVerticalStrut(20), gbc);
+
+        // Chief Coordinator button
+        JButton chiefButton = new JButton("I am the Chief Event Coordinator");
+        chiefButton.setFont(new Font("Arial", Font.ITALIC, 12));
+        chiefButton.setForeground(new Color(139, 0, 0));
+        chiefButton.addActionListener(e -> handleChiefLogin());
+
+        gbc.gridy = 8;
+        add(chiefButton, gbc);
+        
         buttonPanel.add(loginButton);
         buttonPanel.add(registerButton);
         
@@ -155,6 +168,21 @@ public class LoginPanel extends JPanel {
             }
         } else {
             showMessage("Invalid email or password", Color.RED);
+        }
+    }
+    
+    private void handleChiefLogin() {
+        String password = JOptionPane.showInputDialog(this,
+            "Enter Chief Event Coordinator Password:",
+            "Chief Login",
+            JOptionPane.PLAIN_MESSAGE);
+        
+        if (password != null && password.equals("chief2025")) {  // Demo password
+            mainFrame.showChiefCoordinatorPanel();
+            emailField.setText("");
+            passwordField.setText("");
+        } else if (password != null) {
+            showMessage("Invalid Chief password", Color.RED);
         }
     }
     
