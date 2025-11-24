@@ -86,7 +86,7 @@ public class Booking {
     // State methods
     public void setState(BookingState state) {
         this.currentState = state;
-        System.out.println("📊 Booking state changed to: " + state.getStateName());
+        System.out.println(" Booking state changed to: " + state.getStateName());
     }
     public BookingState getState() {
         return currentState;
