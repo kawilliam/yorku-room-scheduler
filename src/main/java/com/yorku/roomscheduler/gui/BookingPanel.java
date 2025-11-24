@@ -2,6 +2,7 @@ package com.yorku.roomscheduler.gui;
 
 import com.yorku.roomscheduler.dao.*;
 import com.yorku.roomscheduler.model.*;
+import com.yorku.roomscheduler.model.enums.RoomStatus;
 import com.yorku.roomscheduler.model.users.User;
 import com.yorku.roomscheduler.patterns.facade.BookingFacade;
 import com.yorku.roomscheduler.patterns.strategy.*;
@@ -142,6 +143,10 @@ public class BookingPanel extends JPanel {
         refreshButton.addActionListener(e -> loadData()); 
         bookingButtonPanel.add(refreshButton); 
         
+        JButton completeButton = new JButton("Complete Booking");
+        completeButton.addActionListener(e -> handleCompleteBooking());
+        bookingButtonPanel.add(completeButton);
+        
         bookingsPanel.add(bookingButtonPanel, BorderLayout.SOUTH);
         
         splitPane.setTopComponent(roomsPanel);
@@ -272,6 +277,7 @@ public class BookingPanel extends JPanel {
         if (booking != null) {
             booking.checkIn();
             bookingDAO.updateBooking(booking);
+            roomDAO.updateRoomStatus(booking.getRoomId(), RoomStatus.OCCUPIED);
             JOptionPane.showMessageDialog(this, "Checked in successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             loadBookings();
         }
@@ -319,12 +325,38 @@ public class BookingPanel extends JPanel {
             booking.cancel();
             bookingDAO.updateBooking(booking);
             
+            roomDAO.updateRoomStatus(booking.getRoomId(), RoomStatus.AVAILABLE);
+            
             if (booking.getCurrentStateName().equals("CANCELLED")) {
                 JOptionPane.showMessageDialog(this, "Booking cancelled!", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "Cannot cancel in current state", "Error", JOptionPane.ERROR_MESSAGE);
             }
             loadBookings();
+        }
+    }
+    
+    private void handleCompleteBooking() {
+        int selectedRow = bookingTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a booking", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        String bookingId = (String) bookingTableModel.getValueAt(selectedRow, 0);
+        Booking booking = bookingDAO.findById(bookingId);
+        
+        if (booking != null && booking.getCurrentStateName().equals("CHECKED_IN")) {
+            booking.complete();
+            bookingDAO.updateBooking(booking);
+            
+            // FREE UP THE ROOM
+            roomDAO.updateRoomStatus(booking.getRoomId(), RoomStatus.AVAILABLE);
+            
+            JOptionPane.showMessageDialog(this, "Booking completed!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Can only complete checked-in bookings", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

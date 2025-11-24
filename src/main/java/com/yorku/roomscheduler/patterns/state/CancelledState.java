@@ -6,22 +6,22 @@ public class CancelledState implements BookingState {
     
     @Override
     public void checkIn(Booking booking) {
-        System.out.println("❌ Cannot check in - booking was cancelled");
+        System.out.println("Cannot check in - booking was cancelled");
     }
     
     @Override
     public void cancel(Booking booking) {
-        System.out.println("ℹ️ Booking already cancelled");
+        System.out.println("Booking already cancelled");
     }
     
     @Override
     public void extend(Booking booking, int hours) {
-        System.out.println("❌ Cannot extend - booking was cancelled");
+        System.out.println("Cannot extend - booking was cancelled");
     }
     
     @Override
     public void complete(Booking booking) {
-        System.out.println("❌ Cannot complete - booking was cancelled");
+        System.out.println("Cannot complete - booking was cancelled");
     }
     
     @Override

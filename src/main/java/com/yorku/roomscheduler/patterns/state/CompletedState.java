@@ -6,22 +6,22 @@ public class CompletedState implements BookingState {
     
     @Override
     public void checkIn(Booking booking) {
-        System.out.println("ℹ️ Booking already completed");
+        System.out.println("Booking already completed");
     }
     
     @Override
     public void cancel(Booking booking) {
-        System.out.println("❌ Cannot cancel - booking already completed");
+        System.out.println("Cannot cancel - booking already completed");
     }
     
     @Override
     public void extend(Booking booking, int hours) {
-        System.out.println("❌ Cannot extend - booking already completed");
+        System.out.println("Cannot extend - booking already completed");
     }
     
     @Override
     public void complete(Booking booking) {
-        System.out.println("ℹ️ Booking already completed");
+        System.out.println("Booking already completed");
     }
     
     @Override
