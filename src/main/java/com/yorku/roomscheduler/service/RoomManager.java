@@ -16,9 +16,9 @@ public class RoomManager {
     }
     
     public boolean isRoomAvailable(String roomId, LocalDateTime startTime, LocalDateTime endTime) {
-        System.out.println("🔍 Checking availability for room " + roomId + "...");
+        System.out.println(" Checking availability for room " + roomId + "...");
         // Simplified - in real system, check against bookings database
-        System.out.println("✅ Room is available!");
+        System.out.println(" Room is available!");
         return true;
     }
     
@@ -32,10 +32,10 @@ public class RoomManager {
     }
     
     public void lockRoom(String roomId) {
-        System.out.println("🔒 Room " + roomId + " locked for booking");
+        System.out.println(" Room " + roomId + " locked for booking");
     }
     
     public void unlockRoom(String roomId) {
-        System.out.println("🔓 Room " + roomId + " unlocked");
+        System.out.println(" Room " + roomId + " unlocked");
     }
 }
