@@ -104,8 +104,10 @@ public class UserDAO {
             String[] line;
             while ((line = reader.readNext()) != null) {
                 if (line[1].equals(email)) {
-                    // In real system, compare hashed passwords
-                    return true; // Simplified for demo
+                   if (line[2].equals(password)) {
+                	   return true;
+                   }
+                     // Simplified for demo
                 }
             }
         } catch (IOException | CsvValidationException e) {

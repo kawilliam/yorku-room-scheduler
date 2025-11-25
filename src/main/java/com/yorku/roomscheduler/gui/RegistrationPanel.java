@@ -28,6 +28,7 @@ public class RegistrationPanel extends JPanel {
     private JButton backButton;
     private JLabel messageLabel;
     
+    
     private int userIdCounter;
     
     public RegistrationPanel(MainFrame mainFrame) {

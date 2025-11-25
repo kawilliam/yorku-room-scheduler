@@ -1,9 +1,23 @@
 package com.yorku.roomscheduler.gui;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 import com.yorku.roomscheduler.dao.UserDAO;
 import com.yorku.roomscheduler.model.users.User;
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Login panel for user authentication

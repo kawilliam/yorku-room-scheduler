@@ -1,5 +1,6 @@
 package com.yorku.roomscheduler.patterns.facade;
 
+import com.yorku.roomscheduler.dao.BookingDAO;
 import com.yorku.roomscheduler.model.Booking;
 import com.yorku.roomscheduler.model.users.User;
 import com.yorku.roomscheduler.service.*;
@@ -7,6 +8,8 @@ import com.yorku.roomscheduler.patterns.strategy.PaymentStrategy;
 import com.yorku.roomscheduler.patterns.state.PendingState;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * FACADE PATTERN
@@ -15,12 +18,13 @@ import java.time.temporal.ChronoUnit;
  */
 public class BookingFacade {
     // Subsystems
+	private BookingDAO bookingDAO;
     private RoomManager roomManager;
     private PaymentProcessor paymentProcessor;
     private EmailService emailService;
     private RoomSensor roomSensor;
     
-    private int bookingIdCounter = 1;
+    private int bookingIdCounter;
     
     public BookingFacade() {
         this.roomManager = new RoomManager();
@@ -75,7 +79,7 @@ public class BookingFacade {
             
             // STEP 4: Create booking
             System.out.println("\nStep 4: Creating booking record...");
-            String bookingId = "B" + String.format("%03d", bookingIdCounter++);
+            String bookingId = "B" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
             Booking booking = new Booking(bookingId, user.getUserId(), roomId, 
                                          startTime, endTime, totalCost);
             booking.setHourlyRate(user.getHourlyRate());
@@ -218,4 +222,5 @@ public class BookingFacade {
             return false;
         }
     }
+    
 }
