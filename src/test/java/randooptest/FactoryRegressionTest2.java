@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class RegressionTest2 {
+public class FactoryRegressionTest2 {
 
     public static boolean debug = false;
 
