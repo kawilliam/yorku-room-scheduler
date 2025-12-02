@@ -22,6 +22,10 @@ import org.junit.runners.Suite;
     FacadeRegressionTest1.class,
     FacadeRegressionTest2.class,
 
+    // ==== STATE RANDOOP TESTS ====
+    StateRegressionTest.class,
+    StateRegressionTest0.class,
+    StateRegressionTest1.class,
 })
 public class AllRandoopTests {
 }
