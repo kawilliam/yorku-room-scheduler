@@ -16,6 +16,11 @@ import org.junit.runners.Suite;
     SingletonRegressionTest.class,
     SingletonRegressionTest0.class,
 
+    // ==== FACADE RANDOOP TESTS ====
+    FacadeRegressionTest.class,
+    FacadeRegressionTest0.class,
+    FacadeRegressionTest1.class,
+    FacadeRegressionTest2.class,
 
 })
 public class AllRandoopTests {
