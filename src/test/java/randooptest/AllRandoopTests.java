@@ -31,6 +31,11 @@ import org.junit.runners.Suite;
     StrategyRegressionTest.class,
     StrategyRegressionTest0.class,
     StrategyRegressionTest1.class,
+    
+    // ==== OBSERVER RANDOOP TESTS ====
+    ObserverRegressionTest.class,
+    ObserverRegressionTest0.class,
+    ObserverRegressionTest1.class,
 })
 public class AllRandoopTests {
 }
